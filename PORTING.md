@@ -40,7 +40,24 @@ MCreator 2025.1 生成的 1.21.1 NeoForge 工程。证据：
 4. **`gradlew` 权限位**：git 里原本是 `100644`，Linux runner 上 `./gradlew` 会
    "Permission denied"，已提交为 `100755`，并在 workflow 里再 `chmod +x` 兜底。
 
-源代码（`src/**`）**一行未改**：上游代码在 21.1.176 上可以编译通过。
+5. **冒烟测试**：`.github/workflows/smoke-test.yml`（手动触发）用 `./gradlew runServer`
+   起一个 1.21.1 专用服务器，等日志出现 `Done (`，并断言模组自己的初始化标记
+   `[Objection] initialised`，从而证明「能加载」，而不只是「能编译」。
+6. **初始化日志**：`ObjectionMod` 构造函数末尾加了一行
+   `LOGGER.info("[Objection] initialised: …")`，既方便玩家排查，也作为冒烟测试的断言锚点。
+   这是本 fork 对 `src/**` 的唯一改动。
+
+## CI 产物
+
+[![Build](https://github.com/Youzix-Star/Objection-/actions/workflows/build.yml/badge.svg)](https://github.com/Youzix-Star/Objection-/actions/workflows/build.yml)
+
+- 构建：<https://github.com/Youzix-Star/Objection-/actions/workflows/build.yml>
+- 发布（每次打 `v*` tag，CI 会自动把 jar 挂到 Release）：
+  <https://github.com/Youzix-Star/Objection-/releases>
+- 最新已验证产物：`objection-neoforge-1.21.1-1.0.0.jar`，位于
+  [v1.0.0 Release](https://github.com/Youzix-Star/Objection-/releases/tag/v1.0.0)，
+  元数据为 `neoforge [21.1.176,)` + `minecraft [1.21.1]`，class 版本 65（Java 21）。
+
 
 ## 本地构建（可选）
 
