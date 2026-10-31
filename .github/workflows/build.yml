@@ -36,13 +36,15 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build with Gradle
-        run: ./gradlew build --no-daemon --stacktrace
+        run: ./gradlew clean build --no-daemon --stacktrace
 
       - name: Collect jar
         run: |
           mkdir -p dist
-          find build/libs -name '*.jar' -exec cp -v {} dist/ \;
-          test -n "$(ls -A dist)" || { echo "No jar produced"; exit 1; }
+          find build/libs -maxdepth 1 -name '*.jar' -exec cp -v {} dist/ \;
+          count=$(find dist -maxdepth 1 -name '*.jar' | wc -l)
+          echo "jars collected: $count"
+          test "$count" -eq 1 || { echo "expected exactly one jar in build/libs"; ls -l build/libs; exit 1; }
           ls -l dist
 
       - name: Upload mod jar
