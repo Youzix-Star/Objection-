@@ -1,0 +1,56 @@
+name: Smoke test (dedicated server)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  server-boot:
+    name: Boot a 1.21.1 dedicated server with the mod
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Prepare server run directory
+        run: |
+          chmod +x ./gradlew
+          mkdir -p run
+          echo "eula=true" > run/eula.txt
+          {
+            echo "online-mode=false"
+            echo "level-name=smoke"
+            echo "level-type=minecraft\\:flat"
+            echo "server-port=25565"
+          } > run/server.properties
+
+      - name: Boot dedicated server
+        run: |
+          ./gradlew runServer --no-daemon --console=plain > server.log 2>&1 &
+          GPID=$!
+          BOOTED=0
+          for i in $(seq 1 120); do
+            if grep -q "Done (" server.log; then BOOTED=1; break; fi
+            if grep -qiE "Mod loading (error|failure)|A fatal error|Exception in thread \"main\"" server.log; then break; fi
+            kill -0 "$GPID" 2>/dev/null || break
+            sleep 5
+          done
+          echo "---------- last 100 log lines ----------"
+          tail -100 server.log
+          test "$BOOTED" = "1" || { echo "::error::dedicated server never reached 'Done ('"; exit 1; }
+          grep -q "\[Objection\]" server.log || { echo "::error::mod init marker missing from log"; exit 1; }
+          echo "OK: dedicated server booted and Objection! initialised"
+          pkill -f 'net.neoforged.devlaunch' || true
+          pkill -f 'net.minecraft.server' || true

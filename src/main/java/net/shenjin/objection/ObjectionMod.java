@@ -51,6 +51,8 @@ public class ObjectionMod {
 
 		ObjectionModParticleTypes.REGISTRY.register(modEventBus);
 
+		LOGGER.info("[Objection] initialised: sounds/items/tabs/effects/particles registered");
+
 		// Start of user code block mod init
 		// End of user code block mod init
 	}
