@@ -4,7 +4,7 @@ license="Objection License"
 
 [[mods]]
 modId="objection"
-version="1.0.0"
+version="1.1.0"
 displayName="Objection!"
 displayURL="https://mcreator.net"
 logoFile="logo.png"

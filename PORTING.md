@@ -1,8 +1,10 @@
 # Objection! — NeoForge 1.21.1 移植说明
 
 本仓库是 [GlcDeamino/Objection-](https://github.com/GlcDeamino/Objection-) 的 fork，
-目标是把它固定在 **Minecraft 1.21.1 + NeoForge 21.1.x** 上，并用 GitHub Actions
-持续产出可安装的 jar。
+固定在 **Minecraft 1.21.1 + NeoForge 21.1.x** 上，并用 GitHub Actions 持续产出可安装的 jar。
+
+**功能上已裁剪：只保留「按 O 键喊异议」（音效 + 头顶粒子 + 聊天广播），
+其余上游内容（两个物品、创造模式物品栏、Objection Timer 效果、屏幕中央贴图）全部移除。**
 
 ## 结论：上游 main 分支本身已经是 1.21.1 NeoForge 工程
 
@@ -25,6 +27,29 @@ MCreator 2025.1 生成的 1.21.1 NeoForge 工程。证据：
 那一份用的是 `IPayloadRegistrar`、`RegisterPayloadHandlerEvent`、`PlayPayloadContext`、
 `TickEvent.ServerTickEvent`、`mods.toml` + `neoforge [20.4.223,)`。
 也就是说 **1.20.4 → 1.21.1 的移植上游作者已经做过**，本 fork 不需要重复搬运代码。
+
+## 功能裁剪明细（v1.1.0 起）
+
+保留：
+
+| 保留项 | 位置 |
+| --- | --- |
+| O 键触发（默认键位可在「控制」里改） | `init/ObjectionModKeyMappings.java` |
+| 网络包 `objection:key_objection_trigger` | `network/ObjectionTriggerMessage.java` |
+| 服务端执行：粒子 + 音效 + 聊天广播 | `procedures/ObjectionTriggerEventProcedure.java` |
+| `objection:objection` 音效与 `objection` 粒子 | `init/ObjectionModSounds.java`、`init/ObjectionModParticleTypes.java` |
+| 头顶粒子渲染 | `client/particle/ObjectionParticle.java` |
+
+移除（连同 MCreator 元素定义一起删掉，避免重新生成时回潮）：
+
+- 物品：`AttorneysBadge`（律师徽章）、`Indictment`（起诉状）及其模型、贴图、语言键
+- 创造模式物品栏 `ObjectionTab`
+- 状态效果 `ObjectionTimer` 及 `potion/ObjectionTimerMobEffect.java`、`textures/mob_effect/*`
+- 屏幕中央贴图：`ObjectionOverlay`、`OOA1/2/3` 四个 overlay 类、4 个配套 procedure、
+  `textures/screens/objection.png`
+- 触发流程里「32 格内实体施加 Objection Timer」的循环（overlay 的唯一数据来源），
+  `elements/ObjectionTriggerEvent.mod.json` 里的 Blockly 过程也同步删掉了那个块
+- 因此触发时不再有屏幕中央的大图，只剩玩家头顶的粒子 + 音效 + 聊天栏
 
 ## 本 fork 做了什么
 
@@ -54,9 +79,11 @@ MCreator 2025.1 生成的 1.21.1 NeoForge 工程。证据：
 - 构建：<https://github.com/Youzix-Star/Objection-/actions/workflows/build.yml>
 - 发布（每次打 `v*` tag，CI 会自动把 jar 挂到 Release）：
   <https://github.com/Youzix-Star/Objection-/releases>
-- 最新已验证产物：`objection-neoforge-1.21.1-1.0.0.jar`，位于
-  [v1.0.0 Release](https://github.com/Youzix-Star/Objection-/releases/tag/v1.0.0)，
-  元数据为 `neoforge [21.1.176,)` + `minecraft [1.21.1]`，class 版本 65（Java 21）。
+- 最新产物：`objection-neoforge-1.21.1-1.1.0.jar`（裁剪版，385 KB），位于
+  [v1.1.0 Release](https://github.com/Youzix-Star/Objection-/releases/tag/v1.1.0)；
+  历史版本 [v1.0.0](https://github.com/Youzix-Star/Objection-/releases/tag/v1.0.0)
+  是未裁剪的上游行为。
+  两者元数据均为 `neoforge [21.1.176,)` + `minecraft [1.21.1]`，class 版本 65（Java 21）。
 
 
 ## 本地构建（可选）
@@ -65,20 +92,12 @@ MCreator 2025.1 生成的 1.21.1 NeoForge 工程。证据：
 git clone https://github.com/Youzix-Star/Objection-.git
 cd Objection-
 ./gradlew build          # 需要 JDK 21；首次会下载 NeoForge/Minecraft 依赖
-# 产物: build/libs/objection-neoforge-1.21.1-1.0.0.jar
+# 产物: build/libs/objection-neoforge-1.21.1-1.1.0.jar
 ```
 
-## 已知遗留缺陷（上游自带，未修）
+## 已知遗留缺陷
 
-- `assets/objection/models/item/indictment.json` 的 `layer0` 指向
-  `objection:item/attorneys_badge`，且 `textures/item/` 下没有 `indictment.png`，
-  所以「起诉状」物品显示的是律师徽章贴图。
-- `lang/zh_cn.json` 的 `item_group.objection.objection_tab` 是 `"Objection!"`，
-  创造模式物品栏标题在中文下会显示英文；`itemGroup.tab_objection_tab` 是 1.19
-  时代的旧键，已不再被读取。
-- `pack.mcmeta` 的 `pack_format` 为 48（1.21.1 的资源包格式是 34，数据包为 48）。
-  NeoForge 只提示不致命，故未改动。
-- 四个 overlay 类里有 MCreator 误加的 `import org.checkerframework.checker.units.qual.h;`
-  （checker-qual 在编译类路径上，所以能过编译），无实际作用。
-- `AttorneysBadgeItem` 覆写的 `hasCraftingRemainingItem/getCraftingRemainingItem`
-  在 1.21.1 已标记 `@Deprecated`（1.21.2 起被移除），编译只会产生 deprecation 提示。
+- 裁剪后 `pack.mcmeta` 的 `pack_format` 仍是 48（1.21.1 资源包为 34，数据包为 48）。
+  NeoForge 只提示不致命，未改动。
+- `ObjectionTriggerMessage` 里 `context.enqueueWork(...)` 的异常分支会用到
+  `context.connection()`，1.21.1 上标记为 deprecated，编译只有提示。

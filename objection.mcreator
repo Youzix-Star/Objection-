@@ -58,178 +58,6 @@
           "src/main/java/net/shenjin/objection/network/ObjectionTriggerMessage.java"
         ]
       }
-    },
-    {
-      "name": "AttorneysBadge",
-      "type": "item",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "attorneys_badge",
-      "metadata": {
-        "files": [
-          "src/main/java/net/shenjin/objection/item/AttorneysBadgeItem.java",
-          "src/main/resources/assets/objection/models/item/attorneys_badge.json"
-        ]
-      }
-    },
-    {
-      "name": "ObjectionOverlay",
-      "type": "overlay",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "objection_overlay",
-      "metadata": {
-        "files": [
-          "src/main/java/net/shenjin/objection/client/screens/ObjectionOverlayOverlay.java"
-        ]
-      }
-    },
-    {
-      "name": "ObjectionTimer",
-      "type": "potioneffect",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "objection_timer",
-      "metadata": {
-        "files": [
-          "src/main/java/net/shenjin/objection/potion/ObjectionTimerMobEffect.java"
-        ]
-      }
-    },
-    {
-      "name": "ObjectionOverlayXianShiYouXiNeiDieJiaCeng",
-      "type": "procedure",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "objection_overlay_xian_shi_you_xi_nei_die_jia_ceng",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/shenjin/objection/procedures/ObjectionOverlayXianShiYouXiNeiDieJiaCengProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      }
-    },
-    {
-      "name": "ObjectionOverlayAnim1",
-      "type": "procedure",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "objection_overlay_anim_1",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/shenjin/objection/procedures/ObjectionOverlayAnim1Procedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      }
-    },
-    {
-      "name": "OOA1",
-      "type": "overlay",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "ooa_1",
-      "metadata": {
-        "files": [
-          "src/main/java/net/shenjin/objection/client/screens/OOA1Overlay.java"
-        ]
-      }
-    },
-    {
-      "name": "OOA2",
-      "type": "overlay",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "ooa_2",
-      "metadata": {
-        "files": [
-          "src/main/java/net/shenjin/objection/client/screens/OOA2Overlay.java"
-        ]
-      }
-    },
-    {
-      "name": "ObjectionOverlayAnim2",
-      "type": "procedure",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "objection_overlay_anim_2",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/shenjin/objection/procedures/ObjectionOverlayAnim2Procedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      }
-    },
-    {
-      "name": "ObjectionOverlayAnim3",
-      "type": "procedure",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "objection_overlay_anim_3",
-      "metadata": {
-        "return_type": "logic",
-        "files": [
-          "src/main/java/net/shenjin/objection/procedures/ObjectionOverlayAnim3Procedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      }
-    },
-    {
-      "name": "OOA3",
-      "type": "overlay",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "ooa_3",
-      "metadata": {
-        "files": [
-          "src/main/java/net/shenjin/objection/client/screens/OOA3Overlay.java"
-        ]
-      }
-    },
-    {
-      "name": "Indictment",
-      "type": "item",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "indictment",
-      "metadata": {
-        "files": [
-          "src/main/resources/assets/objection/models/item/indictment.json",
-          "src/main/java/net/shenjin/objection/item/IndictmentItem.java"
-        ]
-      }
-    },
-    {
-      "name": "ObjectionTab",
-      "type": "tab",
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "objection_tab",
-      "metadata": {
-        "files": []
-      }
     }
   ],
   "variable_elements": [],
@@ -248,21 +76,11 @@
   "language_map": {
     "en_us": {
       "subtitles.objection": "player:Objection!",
-      "effect.objection.objection_timer": "Objection Timer",
-      "item.objection.attorneys_badge": "Attorney\u0027s Badge",
-      "item.objection.indictment": "Indictment",
-      "itemGroup.tab_objection_tab": "Objection!",
-      "key.objection.objection_trigger": "Objection!",
-      "item_group.objection.objection_tab": "Objection!"
+      "key.objection.objection_trigger": "Objection!"
     },
     "zh_cn": {
-      "subtitles.objection": "玩家：異議あり！",
-      "effect.objection.objection_timer": "若看到这个东西请联系开发者修复",
-      "item.objection.attorneys_badge": "律师徽章",
-      "item.objection.indictment": "起诉状",
-      "itemGroup.tab_objection_tab": "異議あり！",
-      "key.objection.objection_trigger": "異議あり！",
-      "item_group.objection.objection_tab": "Objection!"
+      "subtitles.objection": "\u73a9\u5bb6\uff1a\u7570\u8b70\u3042\u308a\uff01",
+      "key.objection.objection_trigger": "\u7570\u8b70\u3042\u308a\uff01"
     }
   },
   "metadata": {
@@ -271,13 +89,10 @@
       "src/main/resources/assets/objection/sounds.json",
       "src/main/java/net/shenjin/objection/init/ObjectionModSounds.java",
       "src/main/resources/META-INF/neoforge.mods.toml",
-      "src/main/java/net/shenjin/objection/init/ObjectionModTabs.java",
       "src/main/resources/pack.mcmeta",
       "src/main/java/net/shenjin/objection/init/ObjectionModKeyMappings.java",
-      "src/main/java/net/shenjin/objection/init/ObjectionModMobEffects.java",
       "src/main/java/net/shenjin/objection/init/ObjectionModParticleTypes.java",
-      "src/main/java/net/shenjin/objection/init/ObjectionModParticles.java",
-      "src/main/java/net/shenjin/objection/init/ObjectionModItems.java"
+      "src/main/java/net/shenjin/objection/init/ObjectionModParticles.java"
     ]
   },
   "foldersRoot": {
@@ -287,8 +102,8 @@
   "workspaceSettings": {
     "modid": "objection",
     "modName": "Objection!",
-    "version": "1.0.0",
-    "description": "神金",
+    "version": "1.1.0",
+    "description": "\u795e\u91d1",
     "author": "Glcdeamino, MCreator",
     "websiteURL": "https://mcreator.net",
     "license": "Objection License",

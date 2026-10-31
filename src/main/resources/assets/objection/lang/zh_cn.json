@@ -1,9 +1,4 @@
 {
   "subtitles.objection": "玩家：異議あり！",
-  "effect.objection.objection_timer": "若看到这个东西请联系开发者修复",
-  "item.objection.attorneys_badge": "律师徽章",
-  "item.objection.indictment": "起诉状",
-  "itemGroup.tab_objection_tab": "異議あり！",
-  "key.objection.objection_trigger": "異議あり！",
-  "item_group.objection.objection_tab": "Objection!"
+  "key.objection.objection_trigger": "異議あり！"
 }

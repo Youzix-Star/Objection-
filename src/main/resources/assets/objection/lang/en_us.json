@@ -1,9 +1,4 @@
 {
   "subtitles.objection": "player:Objection!",
-  "effect.objection.objection_timer": "Objection Timer",
-  "item.objection.attorneys_badge": "Attorney\u0027s Badge",
-  "item.objection.indictment": "Indictment",
-  "itemGroup.tab_objection_tab": "Objection!",
-  "key.objection.objection_trigger": "Objection!",
-  "item_group.objection.objection_tab": "Objection!"
+  "key.objection.objection_trigger": "Objection!"
 }
